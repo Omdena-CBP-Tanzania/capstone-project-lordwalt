@@ -146,14 +146,22 @@ def main():
                     Note: A {(year_adjustment-1)*100:.1f}% adjustment has been applied to account for long-term climate trends.
                 """)
                 
-            # Enhanced confidence interval calculation
+           # Enhanced confidence interval calculation
             base_confidence = 0.15  # Reduced base uncertainty
             year_uncertainty = min(years_ahead * 0.05, 0.3)  # Reduced year uncertainty
             seasonal_uncertainty = 0.03 if month in ["March", "April", "September", "October"] else 0.02
             
             confidence_range = min(base_confidence + year_uncertainty + seasonal_uncertainty, 0.5)
-            lower_bound = max(prediction * (1 - confidence_range), tmin_mean)
-            upper_bound = min(prediction * (1 + confidence_range), tmax_mean)
+            
+            # Calculate confidence interval based on the prediction, not constrained by min/max temps
+            lower_bound = prediction * (1 - confidence_range)
+            upper_bound = prediction * (1 + confidence_range)
+            
+            # Ensure expected low and high temperatures are within logical bounds
+            # Low temp should be between lower_bound and prediction
+            # High temp should be between prediction and upper_bound
+            tmin_mean = max(min(tmin_mean, prediction * 0.95), lower_bound * 1.05)
+            tmax_mean = min(max(tmax_mean, prediction * 1.05), upper_bound * 0.95)
                 
             # Display prediction results in a clean table format
             st.header("Temperature Prediction Results")
