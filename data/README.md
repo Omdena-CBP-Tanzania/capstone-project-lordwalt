@@ -19,3 +19,14 @@ This project provides tools for analyzing Tanzania's historical temperature data
 
 - Python 3.8 or higher
 - pip (Python package installer)
+
+### Dependencies
+
+This project requires several Python packages that are listed in the `requirements.txt` file:
+- streamlit
+- pandas
+- numpy
+- scikit-learn
+- plotly
+- matplotlib
+- joblib

@@ -458,7 +458,7 @@ fig.add_trace(go.Bar(
     orientation='h',
     marker=dict(
         color=sorted_importance,
-        colorscale='Blues',
+        colorscale='GnBu',
         colorbar=dict(title="Importance")
     ),
     text=[f"{v:.3f}" for v in sorted_importance],
