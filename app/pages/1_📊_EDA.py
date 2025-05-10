@@ -228,18 +228,16 @@ try:
         marker=dict(size=6)
     ))
     
-    # Use actual years for trend calculation
-    years = np.array(yearly_stats.index.astype(int))
-    z = np.polyfit(years, yearly_avg, 1)
+    # Add trend line
+    z = np.polyfit(range(len(yearly_avg)), yearly_avg, 1)
     p = np.poly1d(z)
-    trend_years = np.array(range(min(years), max(years)+1))
     fig.add_trace(go.Scatter(
-    x=trend_years,
-    y=p(trend_years),
-    mode='lines',
-    name=f'Trend: {z[0]:.4f}°C/year',
-    line=dict(color='red', width=2, dash='dash')
-))
+        x=yearly_stats.index,
+        y=p(range(len(yearly_avg))),
+        mode='lines',
+        name=f'Trend: {z[0]:.4f}°C/year',
+        line=dict(color='red', width=2, dash='dash')
+    ))
     
     # Add min-max range
     fig.add_trace(go.Scatter(
